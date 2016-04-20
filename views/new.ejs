@@ -1,5 +1,7 @@
 <% include ./partials/header %>
 
+<!-- use name attribute inside of our route to grab the data from the req.params.body / video 225 -->
+
 <div class="ui main text container segment">
   <div class="ui huge header">New Blog</div>
   <form class="ui form" action="/blogs" method="POST">
@@ -15,7 +17,7 @@
       <label>Blog Content</label>
         <textarea name="blog[body]"></textarea>
     </div>
-    <input class="ui teal big basic button"type="submit">
+    <input class="ui teal large basic button"type="submit">
   </form>
 </div>
 <% include ./partials/footer %>

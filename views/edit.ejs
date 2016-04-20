@@ -1,0 +1,24 @@
+<% include ./partials/header %>
+
+<!-- use name attribute inside of our route to grab the data from the req.params.body. It's only necessary because CREATE route in app.js / video 225 -->
+<!-- html doesn't currently support PUT requests. use method override with npm install method-override - listens for a PUT request -->
+
+<div class="ui main text container segment">
+  <div class="ui huge header">Edit <%= blog.title %></div>
+  <form class="ui form" action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
+    <div class="field">
+      <label>Title</label>
+      <input type="text" name="blog[title]" value="<%= blog.title %>">
+    </div>
+    <div class="field">
+      <label>Image</label>
+        <input type="text" name="blog[image]" value="<%= blog.image %>">
+    </div>
+    <div class="field">
+      <label>Blog Content</label>
+        <textarea name="blog[body]"><%= blog.body %></textarea>
+    </div>
+    <input class="ui teal large basic button"type="submit">
+  </form>
+</div>
+<% include ./partials/footer %>
