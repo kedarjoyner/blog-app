@@ -1,0 +1,7 @@
+i.icon {
+  /*double size of parent*/
+  font-size: 2em;
+}
+.container.main {
+  margin-top: 7em;
+}
