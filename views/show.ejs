@@ -14,7 +14,8 @@
         <!-- equal sign to dash allows user to insert html into post -->
         <p><%- blog.body %></p>
       </div>
-      <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+      <a class="ui green basic button" href="/blogs/<%= blog._id %>/edit">Edit</a>
+      <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
         <button class="ui red basic button">Delete</button>
       </form>
     </div>

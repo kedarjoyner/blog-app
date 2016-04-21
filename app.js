@@ -1,8 +1,9 @@
-var bodyParser      = require("body-parser"),
-    methodOverride  = require("method-override"),
-    mongoose        = require("mongoose"),
-    express         = require("express"),
-    app             = express();
+var bodyParser        = require("body-parser"),
+    methodOverride    = require("method-override"),
+    expressSanitizer  = require("express-sanitizer"),
+    mongoose          = require("mongoose"),
+    express           = require("express"),
+    app               = express();
 
 // CONFIGURE MONGOOSE
 mongoose.connect("mongodb://localhost/blog-app");
@@ -15,6 +16,10 @@ app.use(express.static("public"));
 
 // USE BODY PARSER
 app.use(bodyParser.urlencoded({extended: true}));
+
+// USE EXPRES SANITIZER
+  //must come after body parser
+app.use(expressSanitizer());
 
 // USE METHOD OVERRIDE
   //listens for the underscore method
@@ -62,6 +67,13 @@ app.get("/blogs/new", function(req, res){
 //CREATE ROUTE FOR EDITING FORM
 app.post("/blogs", function(req, res){
   // create blog
+  // req.body is whatever is coming from the FORM
+  // blog.body is defined in new.js (the "name") - it's the one we care about
+  console.log(req.body);
+  req.body.blog.body = req.sanitize(req.body.blog.body);
+  console.log("=============");
+  console.log(req.body);
+
   // req.body.blog gets created object from body
   // newBlog holds the object data
   Blog.create(req.body.blog, function(err, newBlog){
@@ -76,6 +88,7 @@ app.post("/blogs", function(req, res){
 
 // UPDATE ROUTE OF EDITED FORM
 app.put("/blogs/:id", function(req, res){
+  req.body.blog.body = req.sanitize(req.body.blog.body);
   // second argument is w/e we call it in "name" form
   // second argument is the newData
   Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog) {
